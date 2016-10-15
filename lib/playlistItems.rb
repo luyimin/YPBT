@@ -1,39 +1,25 @@
-require 'http'
-require_relative 'items'
+require_relative 'yt_api'
+
 
 module LikedVideos
   #Main class to setup a LikedVideos
-  class playlistItems
+  class PlaylistItems
   attr_reader :id
 
-    def initialize(playlist_id, API_KEY )
-
-      playlistItems_response = HTTP.get("https://www.googleapis.com/youtube/v3/playlistItems",
-                            params: { playlistId: playlist_id ,
-                                      key: API_KEY ,
-                                      part: 'id' })
-
-     playlistItems = JSON.load(playlistItems_response.to_s)
-     @id = playlistItems['items'][0]['id']
-
+    def initialize(yt_api,playlist_id:, API_KEY: )
+      @yt_api = yt_api
+      playlistItems = @yt_api.playlistItems_info(playlist_id, API_KEY )
+      @id = playlistItems['items'][0]['id']
     end
 
-   def itemsContent
+    def itemsContent(playlist_id:, API_KEY: )
      return @itemsContent if @itemsContent
-
-     itemsContent_response = HTTP.get("https://www.googleapis.com/youtube/v3/playlistItems",
-                           params: { playlistId: credentials[:playlist_id] ,
-                                     key: credentials[:API_KEY] ,
-                                     part: 'snippet' ,
-                                     fields: 'items(snippet(title,channelId,publishedAt))'})
-     itemsContent = JSON.load(itemsContent_response.to_s)['items']
-     results[:items] = items
+     content = @yt_api.playlistItems_itemsContent(playlist_id, API_KEY)
      @itemsContent = itemsContent.map do |p|
-     LikevVideos::Posting.new(
+     LikevVideos::PlaylistItems.new(
      p['items'][0]['publishedAt'],   p['items'][0]['channelId'] , p['items'][0]['title']
      )
-
-   end
- end
- end
+      end
+    end
+  end
  end
