@@ -3,7 +3,7 @@ require_relative 'display_text'
 require_relative 'youtube_api'
 
 module VideoCommentThreads
-  #Main class to setup a LikedVideos
+  
   class CommentThreads
     attr_reader :kind
 
