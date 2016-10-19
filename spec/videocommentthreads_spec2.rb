@@ -1,12 +1,5 @@
-require 'minitest/autorun'
-require 'minitest/rg'
-require 'yaml'
-
-require './lib/comment_threads.rb'
-
-CREDENTIALS = YAML.load(File.read('config/credentials.yml'))
-YT_RESPONSE = YAML.load(File.read('spec/fixtures/yt_response.yml'))
-RESULTS = YAML.load(File.read('spec/fixtures/results.yml'))
+# frozen_string_literal: true
+require_relative 'spec_helper.rb'
 
 describe 'VideoCommentThreads specifications' do
   before do
