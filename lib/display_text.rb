@@ -17,8 +17,7 @@ module VideoCommentThreads
 
     def text_display
       return @text_display if @text_display
-      text_display = @youtube_api.text_display_info(@video_id, @fields)
-      @text_display = text_display
+      @text_display = @youtube_api.text_display_info(@video_id, @fields)
     end
   end
 end

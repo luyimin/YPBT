@@ -19,5 +19,10 @@ module VideoCommentThreads
       comment_threads = @youtube_api.comment_threads_info(@video_id)
       @comment_threads = comment_threads
     end
+
+    def self.find(youtube_api, video_id:)
+      comment_threads_data = youtube_api.comment_threads_info(video_id)
+      new(fb_api, data: comment_threads_data)
+    end
   end
 end
