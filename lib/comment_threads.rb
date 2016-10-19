@@ -16,8 +16,7 @@ module VideoCommentThreads
 
     def comment_threads
       return @comment_threads_items if @comment_threads_items
-      comment_threads = @youtube_api.comment_threads_info(@video_id)
-      @comment_threads = comment_threads
+      @comment_threads =  @youtube_api.comment_threads_info(@video_id)
     end
 
     def self.find(youtube_api, video_id:)
