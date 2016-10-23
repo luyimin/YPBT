@@ -10,7 +10,6 @@ module VideoCommentThreads
     def initialize(youtube_api, data:)
       @youtube_api = youtube_api
       @data = data
-<<<<<<< HEAD
       # @video_id = video_id
       # @kind = @youtube_api.comment_threads_info(@video_id)[0]['kind']
     end
@@ -20,17 +19,6 @@ module VideoCommentThreads
     #   @comment_threads = @youtube_api.comment_threads_info(@video_id)
     # end
 
-=======
-      #@video_id = video_id
-      #@kind = @youtube_api.comment_threads_info(@video_id)[0]['kind']
-    end
-"""
-    def comment_threads
-      return @comment_threads_items if @comment_threads_items
-      @comment_threads = @youtube_api.comment_threads_info(@video_id)
-    end
-"""
->>>>>>> ad105583c373e3888c3f297b7ace025b48a21e06
     def self.find(youtube_api, video_id:)
       comment_threads_data = youtube_api.comment_threads_info(video_id)
       new(youtube_api, data: comment_threads_data)
