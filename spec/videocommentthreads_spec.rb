@@ -27,19 +27,30 @@ describe 'VideoCommentThreads specifications' do
   it 'should be able to create a comment threads of a video' do
     comment_threads = VideoCommentThreads::CommentThreads.new(
       @youtube_api,
-      video_id: CREDENTIALS[:video_id],
-      api_key:  CREDENTIALS[:api_key]
+      data: @youtube_api.comment_threads_info(CREDENTIALS[:video_id])
+      #video_id: CREDENTIALS[:video_id],
     )
-    comment_threads.kind.length.must_be :>, 0
-  end
 
+    comment_threads.data.length.must_be :>, 0
+  end
+"""
   it 'should get comment threads information about the video' do
     comment_threads = VideoCommentThreads::CommentThreads.new(
       @youtube_api,
-      video_id: CREDENTIALS[:video_id],
-      api_key:  CREDENTIALS[:api_key]
+      data: @youtube_api.comment_threads_info(CREDENTIALS[:video_id])
+      #video_id: CREDENTIALS[:video_id],
     )
     comment_threads_info = comment_threads.comment_threads
+    comment_threads_info.size.must_be :>, 10
+  end
+"""
+  it 'should be able to find a comment threads' do
+    comment_threads = VideoCommentThreads::CommentThreads.find(
+      @youtube_api,
+      video_id: CREDENTIALS[:video_id]
+    )
+
+    comment_threads_info = comment_threads.data
     comment_threads_info.size.must_be :>, 10
   end
 end
