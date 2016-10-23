@@ -33,7 +33,6 @@ describe 'VideoCommentThreads specifications' do
 
     comment_threads.data.length.must_be :>, 0
   end
-
   # it 'should get comment threads information about the video' do
   #   comment_threads = VideoCommentThreads::CommentThreads.new(
   #     @youtube_api,
@@ -43,7 +42,6 @@ describe 'VideoCommentThreads specifications' do
   #   comment_threads_info = comment_threads.comment_threads
   #   comment_threads_info.size.must_be :>, 10
   # end
-
   it 'should be able to find a comment threads' do
     comment_threads = VideoCommentThreads::CommentThreads.find(
       @youtube_api,
