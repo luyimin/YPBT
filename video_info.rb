@@ -8,6 +8,17 @@ results = {}
 
 resource_name = 'commentThreads'
 
+field = 'items(snippet(channelId,description,publishedAt,title))'
+video_response =
+  HTTP.get('https://www.googleapis.com/youtube/v3/videos',
+           params: {  id:     credentials[:video_id],
+                      key:    credentials[:api_key],
+                      part:   'snippet',
+                      fields: field })
+yt_response[:video] = video_response
+video = JSON.parse(video_response.to_s)['items'][0]['snippet']
+results[:video] = video
+
 comment_threads_response =
   HTTP.get("https://www.googleapis.com/youtube/v3/#{resource_name}",
            params: { videoId:  credentials[:video_id],
