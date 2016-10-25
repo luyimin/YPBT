@@ -5,7 +5,7 @@ task default: :spec
 
 desc 'run tests'
 task :spec do
-  sh 'ruby spec/videocommentthreads_spec.rb'
+  sh 'ruby spec/video_spec.rb'
 end
 
 desc 'delete cassette fixtures'

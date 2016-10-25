@@ -6,16 +6,16 @@ describe 'Video specifications' do
     c.cassette_library_dir = CASSETTES_FOLDER
     c.hook_into :webmock
 
-    c.filter_sensitive_data('<API_KEY>') { CREDENTIALS[:api_key] }
+    c.filter_sensitive_data('<API_KEY>') { ENV['YOUTUBE_API_KEY'] }
     c.filter_sensitive_data('<API_KEY_ESCAPED>') do
-      URI.escape(CREDENTIALS[:api_key])
+      URI.escape(ENV['YOUTUBE_API_KEY'])
     end
   end
 
   before do
     VCR.insert_cassette CASSETTE_FILE, record: :new_episodes
     @youtube_api = YoutubeVideo::YtApi.new(
-      api_key: CREDENTIALS[:api_key]
+      api_key: ENV['YOUTUBE_API_KEY']
     )
   end
 
@@ -26,7 +26,7 @@ describe 'Video specifications' do
   it 'should be able to open a video' do
     video = YoutubeVideo::Video.find(
       @youtube_api,
-      video_id: CREDENTIALS[:video_id]
+      video_id: TEST_VIDEO_ID
     )
     video.title.length.must_be :>, 0
   end
@@ -34,7 +34,7 @@ describe 'Video specifications' do
   it 'should get the latest commentThreads from a video' do
     video = YoutubeVideo::Video.find(
       @youtube_api,
-      video_id: CREDENTIALS[:video_id]
+      video_id: TEST_VIDEO_ID
     )
     commentthreads = video.commentthreads
     commentthreads.count.must_be :>, 10
@@ -43,7 +43,7 @@ describe 'Video specifications' do
   it 'should get information about comment on the commentThreads' do
     video = YoutubeVideo::Video.find(
       @youtube_api,
-      video_id: CREDENTIALS[:video_id]
+      video_id: TEST_VIDEO_ID
     )
 
     video.commentthreads.each do |comment|
