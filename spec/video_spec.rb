@@ -14,9 +14,9 @@ describe 'Video specifications' do
 
   before do
     VCR.insert_cassette CASSETTE_FILE, record: :new_episodes
-    @youtube_api = YoutubeVideo::YtApi.new(
-      api_key: ENV['YOUTUBE_API_KEY']
-    )
+    # @youtube_api = YoutubeVideo::YtApi.new(
+    #   api_key: ENV['YOUTUBE_API_KEY']
+    # )
   end
 
   after do
@@ -25,7 +25,6 @@ describe 'Video specifications' do
 
   it 'should be able to open a video' do
     video = YoutubeVideo::Video.find(
-      @youtube_api,
       video_id: TEST_VIDEO_ID
     )
     video.title.length.must_be :>, 0
@@ -33,7 +32,6 @@ describe 'Video specifications' do
 
   it 'should get the latest commentThreads from a video' do
     video = YoutubeVideo::Video.find(
-      @youtube_api,
       video_id: TEST_VIDEO_ID
     )
     commentthreads = video.commentthreads
@@ -42,7 +40,6 @@ describe 'Video specifications' do
 
   it 'should get information about comment on the commentThreads' do
     video = YoutubeVideo::Video.find(
-      @youtube_api,
       video_id: TEST_VIDEO_ID
     )
 
@@ -55,7 +52,7 @@ describe 'Video specifications' do
   it 'should find all parts of a full comment' do
     comment = YT_RESULT['comment'].first
     retrieved = YoutubeVideo::Comment.find(
-      @youtube_api, comment_id: comment['id']
+      comment_id: comment['id']
     )
 
     retrieved.comment_id.must_equal comment['id']

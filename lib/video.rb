@@ -7,25 +7,24 @@ module YoutubeVideo
   class Video
     attr_reader :title
 
-    def initialize(youtube_api, data:)
-      @youtube_api = youtube_api
+    def initialize(data:)
       @title = data['snippet']['title']
       @id = data['id']
     end
 
     def commentthreads
       return @commentthreads if @commentthreads
-      raw_threads = @youtube_api.video_commentthreads_info(@id)
+      raw_threads = YoutubeVideo::YtApi.video_commentthreads_info(@id)
       @commentthreads = raw_threads.map do |comment|
         YoutubeVideo::Comment.new(
-          @youtube_api, data: comment['snippet']['topLevelComment']
+          data: comment['snippet']['topLevelComment']
         )
       end
     end
 
-    def self.find(youtube_api, video_id:)
-      video_data = youtube_api.video_info(video_id)
-      new(youtube_api, data: video_data)
+    def self.find(video_id:)
+      video_data = YoutubeVideo::YtApi.video_info(video_id)
+      new(data: video_data)
     end
   end
 end

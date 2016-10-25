@@ -8,20 +8,19 @@ module YoutubeVideo
   class Comment
     attr_reader :comment_id, :updated_at, :text_display, :published_at
 
-    def initialize(youtube_api, data: nil)
-      @youtube_api = youtube_api
+    def initialize(data: nil)
       load_data(data)
     end
 
     def author
       return @author if @author
-      author_data = @youtube_api.authors_info(@comment_id)
+      author_data = YtApi.authors_info(@comment_id)
       @author = YoutubeVideo::Author.new(author_data)
     end
 
-    def self.find(youtube_api, comment_id:)
-      comment_data = youtube_api.comment_info(comment_id)
-      new(youtube_api, data: comment_data)
+    def self.find(comment_id:)
+      comment_data = YoutubeVideo::YtApi.comment_info(comment_id)
+      new(data: comment_data)
     end
 
     private
