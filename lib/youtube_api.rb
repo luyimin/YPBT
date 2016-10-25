@@ -2,7 +2,7 @@
 require 'http'
 require 'json'
 
-module VideoCommentThreads
+module YoutubeVideo
   # Service for all Youtube API calls
   class YtApi
     YT_URL = 'https://www.googleapis.com'
@@ -17,8 +17,22 @@ module VideoCommentThreads
       @api_key = api_key
     end
 
-    def comment_threads_info(video_id)
-      comment_threads_response = HTTP.get(YT_RESOURCE_URL,
+    def yt_resource_url(resouce_name)
+      URI.join(YT_API_URL, resouce_name.to_s)
+    end
+
+    def video_info(video_id)
+      field = 'items(id,snippet(channelId,description,publishedAt,title))'
+      video_response = HTTP.get(yt_resource_url('videos'),
+                                params: { id:     video_id,
+                                          key:    @api_key,
+                                          part:   'snippet',
+                                          fields: field })
+      JSON.parse(video_response.to_s)['items'][0]
+    end
+
+    def video_commentthreads_info(video_id)
+      comment_threads_response = HTTP.get(yt_resource_url('commentThreads'),
                                           params: { videoId:  video_id,
                                                     key:      @api_key,
                                                     order:    'relevance',
@@ -26,14 +40,25 @@ module VideoCommentThreads
       JSON.parse(comment_threads_response.to_s)['items']
     end
 
-    def text_display_info(video_id, fields)
-      text_display_response = HTTP.get(YT_RESOURCE_URL,
-                                       params: {  videoId: video_id,
-                                                  key:     @api_key,
-                                                  order:  'relevance',
-                                                  part:   'snippet',
-                                                  fields: fields })
-      JSON.parse(text_display_response.to_s)['items']
+    def comment_info(comment_id)
+      comment_response = HTTP.get(yt_resource_url('comments'),
+                                  params: { id: comment_id,
+                                            key: @api_key,
+                                            part: 'snippet' })
+      JSON.parse(comment_response.to_s)['items'][0]
+    end
+
+    def authors_info(comment_id)
+      str = 'items'
+      str2 = '(snippet(authorChannelId,authorChannelUrl'
+      str3 = ',authorDisplayName,authorProfileImageUrl))'
+      field = str + str2 + str3
+      authors_response = HTTP.get(yt_resource_url('comments'),
+                                  params: { id: comment_id,
+                                            key: @api_key,
+                                            part: 'snippet',
+                                            fields: field })
+      JSON.parse(authors_response.to_s)['items']
     end
   end
 end
