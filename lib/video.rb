@@ -3,28 +3,29 @@ require_relative 'comment'
 require_relative 'youtube_api'
 
 module YoutubeVideo
-  # Main class to setup a VideoCommentThreads
+  # Main class to setup a Video
   class Video
     attr_reader :title
 
-    def initialize(youtube_api, video_id:)
+    def initialize(youtube_api, data:)
       @youtube_api = youtube_api
-      video = @youtube_api.video_info(video_id)
-      @title = video['title']
-      @id = video_id
+      @title = data['snippet']['title']
+      @id = data['id']
     end
 
     def commentthreads
       return @commentthreads if @commentthreads
       raw_threads = @youtube_api.video_commentthreads_info(@id)
-      @commentthreads = raw_threads.map do |p|
+      @commentthreads = raw_threads.map do |comment|
         YoutubeVideo::Comment.new(
-          @youtube_api,
-          comment_id: p['id'],
-          text_display: p['snippet']['topLevelComment']['snippet']['textDisplay'],
-          updated_at: p['snippet']['topLevelComment']['snippet']['updateAt']
+          @youtube_api, data: comment['snippet']['topLevelComment']
         )
       end
+    end
+
+    def self.find(youtube_api, video_id:)
+      video_data = youtube_api.video_info(video_id)
+      new(youtube_api, data: video_data)
     end
   end
 end
