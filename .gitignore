@@ -1,2 +1,3 @@
 config/credentials.yml
 coverage/
+Gemfile.lock
