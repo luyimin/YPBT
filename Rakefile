@@ -3,6 +3,26 @@ require 'rake/testtask'
 
 task default: :spec
 
+namespace :credentials do
+  require 'yaml'
+
+  desc 'generate YOUTUBE_API_KEY to STDOUT'
+  task :get_youtube_api_key do
+    credentials = YAML.load(File.read('config/credentials.yml'))
+    require_relative 'lib/YPBT/youtube_api'
+    ENV['YOUTUBE_API_KEY'] = credentials[:YOUTUBE_API_KEY]
+
+    puts "YOUTUBE_API_KEY: #{YoutubeVideo::YtApi.api_key}"
+  end
+
+  desc 'Export sample credentials from file to bash'
+  task :export do
+    credentials = YAML.load(File.read('config/credentials.yml'))
+    puts 'Please run the following in bash:'
+    puts "export YOUTUBE_API_KEY=#{credentials[:YOUTUBE_API_KEY]}"
+  end
+end
+
 desc 'run tests'
 task :spec do
   sh 'ruby spec/video_spec.rb'
@@ -16,6 +36,7 @@ task :wipe do
 end
 
 desc 'quality checks'
+
 namespace :quality do
   desc 'run all quality checks'
   task all: [:rubocop, :flog, :flay]
