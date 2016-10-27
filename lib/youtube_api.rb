@@ -46,10 +46,8 @@ module YoutubeVideo
     end
 
     def self.authors_info(comment_id)
-      str = 'items'
-      str2 = '(snippet(authorChannelId,authorChannelUrl'
-      str3 = ',authorDisplayName,authorProfileImageUrl))'
-      field = str + str2 + str3
+      field = 'items(snippet(authorChannelId,authorChannelUrl,'\
+      'authorDisplayName,authorProfileImageUrl))'
       authors_response = HTTP.get(yt_resource_url('comments'),
                                   params: { id: comment_id,
                                             key: api_key,
