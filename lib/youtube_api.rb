@@ -9,7 +9,6 @@ module YoutubeVideo
     YT_COMPANY = 'youtube'
     YT_COMPANY_URL = URI.join(YT_URL, "#{YT_COMPANY}/")
     API_VER = 'v3'
-    YT_RESOURCE = 'commentThreads'
     YT_API_URL = URI.join(YT_COMPANY_URL, "#{API_VER}/")
     YT_RESOURCE_URL = URI.join(YT_API_URL, YT_RESOURCE.to_s)
 
