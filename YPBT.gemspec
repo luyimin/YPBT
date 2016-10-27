@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
 
   s.summary     =  'Gets comment from public Youtube videos'
   s.description =  'Extracts comment threads, comments, and comment author from YT videos'
-  s.authors     =  ['luyimin']
+  s.authors     =  ['luyimin'],['Yuan-Yu'],['KunLin']
   s.email       =  ['b37582000@gmail.com']
 
   s.files       =  `git ls-files`.split("\n")

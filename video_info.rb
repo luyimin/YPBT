@@ -6,13 +6,23 @@ credentials = YAML.load(File.read('config/credentials.yml'))
 yt_response = {}
 results = {}
 
+YT_URL = 'https://www.googleapis.com'
+YT_COMPANY = 'youtube'
+YT_COMPANY_URL = URI.join(YT_URL, "#{YT_COMPANY}/")
+API_VER = 'v3'
+YT_API_URL = URI.join(YT_COMPANY_URL, "#{API_VER}/")
+
+def yt_resource_url(resouce_name)
+  URI.join(YT_API_URL, resouce_name.to_s)
+end
+
 resource_name = 'commentThreads'
 
 field = 'items(snippet(channelId,description,publishedAt,title))'
 video_response =
-  HTTP.get('https://www.googleapis.com/youtube/v3/videos',
-           params: {  id:     credentials[:video_id],
-                      key:    credentials[:api_key],
+  HTTP.get(yt_resource_url('videos'),
+           params: {  id:     'FugHj7MGhss',
+                      key:    credentials[:YOUTUBE_API_KEY],
                       part:   'snippet',
                       fields: field })
 yt_response[:video] = video_response

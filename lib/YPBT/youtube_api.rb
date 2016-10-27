@@ -10,11 +10,6 @@ module YoutubeVideo
     YT_COMPANY_URL = URI.join(YT_URL, "#{YT_COMPANY}/")
     API_VER = 'v3'
     YT_API_URL = URI.join(YT_COMPANY_URL, "#{API_VER}/")
-  
-
-    def self.config=(credentials)
-      @config ? @config.update(credentials) : @config = credentials
-    end
 
     def self.api_key
       return @api_key if @api_key
@@ -28,7 +23,7 @@ module YoutubeVideo
                                           key:    api_key,
                                           part:   'snippet',
                                           fields: field })
-      JSON.parse(video_response.to_s)['items'][0]
+      JSON.parse(video_response.to_s)["items"].first
     end
 
     def self.video_commentthreads_info(video_id)
