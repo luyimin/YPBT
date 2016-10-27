@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), *%w(.. lib))
+require 'YPBT'
+
+video_id = ARGV[0]
+unless video_id
+  puts 'USAGE: YPBT [video_id]'
+  exit(1)
+end
+
+video = YoutubeVideo::Video.find(video_id: video_id)
+
+puts video.title
+puts Array.new(video.title.length) { '-' }.join
+video.commentthreads.first(3).each.with_index do |comment, index|
+  print "#{index + 1}: "
+  puts comment.text_display ? comment.text_display : '(blank)'
+  puts "Attached: #{comment.author.author_channel_url}" if comment.author
+  puts
+end

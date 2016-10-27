@@ -10,7 +10,11 @@ module YoutubeVideo
     YT_COMPANY_URL = URI.join(YT_URL, "#{YT_COMPANY}/")
     API_VER = 'v3'
     YT_API_URL = URI.join(YT_COMPANY_URL, "#{API_VER}/")
-    YT_RESOURCE_URL = URI.join(YT_API_URL, YT_RESOURCE.to_s)
+  
+
+    def self.config=(credentials)
+      @config ? @config.update(credentials) : @config = credentials
+    end
 
     def self.api_key
       return @api_key if @api_key
