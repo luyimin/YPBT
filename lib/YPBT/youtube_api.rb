@@ -23,7 +23,7 @@ module YoutubeVideo
                                           key:    api_key,
                                           part:   'snippet',
                                           fields: field })
-      JSON.parse(video_response.to_s)["items"].first
+      JSON.parse(video_response.to_s)['items'].first
     end
 
     def self.video_commentthreads_info(video_id)
@@ -45,7 +45,7 @@ module YoutubeVideo
 
     def self.authors_info(comment_id)
       field = 'items(snippet(authorChannelId,authorChannelUrl,'\
-      'authorDisplayName,authorProfileImageUrl))'
+      'authorDisplayName,authorProfileImageUrl,likeCount))'
       authors_response = HTTP.get(yt_resource_url('comments'),
                                   params: { id: comment_id,
                                             key: api_key,

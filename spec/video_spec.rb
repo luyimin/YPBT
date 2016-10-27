@@ -23,7 +23,7 @@ describe 'Video specifications' do
     VCR.eject_cassette
   end
 
-  describe 'YTApi Credentials' do
+  describe 'YtApi Credentials' do
     it 'should be able to get a new api key with ENV credentials' do
       YoutubeVideo::YtApi.api_key.length.must_be :>, 0
     end
