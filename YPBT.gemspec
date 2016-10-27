@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version     =  YoutubeVideo::VERSION
 
   s.summary     =  'Gets comment from public Youtube videos'
-  s.description =  'Youtube Progress Bar Tagger \n'\
-                  'Extracts comment threads, comments, and '\
-                    'comment of author from Youtube videos'
+  s.description =  'Youtube Progress Bar Tagger'\
+                   'extracts comment threads, comments, and '\
+                   'comment of author from Youtube videos'
   s.authors     =  ['Yi-Min'], ['Yuan-Yu'], ['Kun-Lin']
   s.email       =  ['b37582000@gmail.com'], ['tearsgundam@gmail.com'],
                    ['orange6318@hotmail.com']
