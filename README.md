@@ -3,11 +3,11 @@
  -Youtube Progress Bar Tagger (YPBT) is a gem tracking the comments following a youtube movie and capturing the time points of popularity.
  +Youtube Progress Bar Tagger (YPBT) is a gem that tracks the comments following a youtube movie and captures the time points of popularity.
   
-  ## Installation
+## Installation
   
- If you are working on a project, add this to your Gemfile: `gem 'YPBT'`
+If you are working on a project, add this to your Gemfile: `gem 'YPBT'`
  
- ## Set up Google API key
+## Set up Google API key
 
 Setup your Youtube developer credentials by Google account:
 
