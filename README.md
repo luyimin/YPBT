@@ -6,6 +6,10 @@
 ## Installation
   
 If you are working on a project, add this to your Gemfile: `gem 'YPBT'`
+
+ For ad hoc installation from command line:
+ 
+ `$ gem install YPBT`
  
 ## Set up Google API key
 
@@ -14,9 +18,7 @@ Setup your Youtube developer credentials by Google account:
 https://console.developers.google.com/apis/credentials
 
 
- For ad hoc installation from command line:
- 
- ```$ gem install YPBT```
+
  
 ## Quick Start  
    Export your [Youtube api key](https://console.developers.google.com/apis/credentials)  
